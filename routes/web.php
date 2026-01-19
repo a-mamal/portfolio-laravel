@@ -25,3 +25,11 @@ Route::get('/projects', function() {
 Route::get('/experience', function() {
     return view('pages.experience');
 })->name('experience');
+
+Route::get('/about', function() {
+    return view('pages.about');
+})->name('about');
+
+Route::get('/contact', function() {
+    return view('pages.contact');
+})->name('contact');
