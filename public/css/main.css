@@ -28,6 +28,17 @@ body {
     position: sticky;
 }
 
+nav a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    margin: 1em 0;
+}
+
+nav a:hover {
+    color: #6495ED;
+}
+
 .right-wrapper{
     display: flex;
     flex-direction: column;
