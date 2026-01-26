@@ -28,6 +28,13 @@
                 @enderror
             </div>
 
+            <div style="margin-bottom:10px;">
+                <label>Highlights (one per line)</label><br>
+                <textarea name="highlights_text" rows="5" style="width:100%;">{{ old('highlights_text') }}</textarea>
+                @error('highlights_text') <div style="color:red;">{{ $message }}</div> @enderror
+            </div>
+
+
             <div class="form-group">
                 <label>Project URL</label>
                 <input type="url" name="project_url" value="{{ old('project_url') }}">
