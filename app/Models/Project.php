@@ -9,4 +9,13 @@ class Project extends Model
 {
     /** @use HasFactory<\Database\Factories\ProjectFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'title',
+        'slug',
+        'description',
+        'project_url',
+        'github_url',
+        'status',
+    ];
 }
