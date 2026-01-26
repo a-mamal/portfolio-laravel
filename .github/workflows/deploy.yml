@@ -1,0 +1,46 @@
+name: Deploy Laravel Portfolio
+
+# Run this workflow whenever you push to main
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Pull your code from GitHub
+      - uses: actions/checkout@v3
+
+      # 2. Set up PHP 8.4 (for Laravel)
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.4
+          extensions: mbstring, bcmath, curl, xml
+
+      # 3. Install Composer dependencies
+      - name: Install Composer dependencies
+        run: composer install --no-dev --optimize-autoloader
+
+      # 4. Set up Node and build Vite assets
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+      - name: Install NPM packages
+        run: npm install
+      - name: Build assets
+        run: npm run build
+
+      # 5. Deploy to Hostinger via SFTP
+      - name: Deploy via SFTP
+        uses: SamKirkland/FTP-Deploy-Action@v4
+        with:
+          server: ${{ secrets.HOSTINGER_HOST }}
+          username: ${{ secrets.HOSTINGER_USER }}
+          password: ${{ secrets.HOSTINGER_PASS }}
+          local-dir: ./          # deploy the whole repo
+          server-dir: /public_html/  # folder on Hostinger
