@@ -27,6 +27,7 @@ class ProjectController extends Controller
         // Validate form inputs
         $validated = $request->validate([
             'title' => 'required|string|max:255',
+            'type' => 'nullable|string|max:255',
             'description' => 'required',
             'project_url' => 'nullable|url',
             'github_url' => 'nullable|url',
