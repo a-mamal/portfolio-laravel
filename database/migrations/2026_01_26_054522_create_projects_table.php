@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->text('description');
+            $table->json('highlights')->nullable();
             $table->string('project_url')->nullable();
             $table->string('github_url')->nullable();
             $table->enum('status', ['draft', 'published'])->default('draft');

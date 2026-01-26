@@ -18,4 +18,8 @@ class Project extends Model
         'github_url',
         'status',
     ];
+
+    protected $casts = [
+        'highlights' => 'array',
+    ];
 }
