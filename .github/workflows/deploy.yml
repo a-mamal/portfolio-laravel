@@ -11,21 +11,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Pull your code from GitHub
+      # Pull code from GitHub
       - uses: actions/checkout@v3
 
-      # 2. Set up PHP 8.4 (for Laravel)
+      # Set up PHP 8.4 (for Laravel)
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: 8.4
           extensions: mbstring, bcmath, curl, xml
 
-      # 3. Install Composer dependencies
+      # Install Composer dependencies
       - name: Install Composer dependencies
         run: composer install --no-dev --optimize-autoloader
 
-      # 4. Set up Node and build Vite assets
+      # Set up Node and build Vite assets
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
@@ -35,8 +35,8 @@ jobs:
       - name: Build assets
         run: npm run build
 
-      # 5. Deploy to Hostinger via FTP
-      - name: Deploy via FTP
+      # Deploy everything except public/ to parent folder
+      - name: Deploy Laravel backend files
         uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         with:
           server: ${{ secrets.HOSTINGER_HOST }}
@@ -44,5 +44,18 @@ jobs:
           password: ${{ secrets.HOSTINGER_PASS }}
           protocol: ftps
           port: 21
-          local-dir: ./          # deploy the whole repo
-          server-dir: /public_html/  # folder on Hostinger
+          local-dir: ./            # whole repo
+          exclude: public/**       # skip public folder
+          server-dir: ../          # parent of public_html
+
+      # Deploy only public/ to public_html
+      - name: Deploy public folder
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        with:
+          server: ${{ secrets.HOSTINGER_HOST }}
+          username: ${{ secrets.HOSTINGER_USER }}
+          password: ${{ secrets.HOSTINGER_PASS }}
+          protocol: ftps
+          port: 21
+          local-dir: ./public
+          server-dir: /public_html/
