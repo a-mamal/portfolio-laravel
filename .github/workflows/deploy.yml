@@ -52,6 +52,7 @@ jobs:
             node_modules/**
             .git/**
             tests/**
+            vendor/**
           server-dir: ../          # parent of public_html
 
       # Deploy only public/ to public_html
