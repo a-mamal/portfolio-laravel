@@ -13,6 +13,15 @@ return new class extends Migration
     {
         Schema::create('spoken_languages', function (Blueprint $table) {
             $table->id();
+
+            $table->foreignId('profile_id')
+                ->constrained()
+                ->onDelete('cascade');
+
+            $table->string('name');        // English, Greek, etc.
+            $table->string('proficiency'); // Native, Fluent, C2, B2, etc.
+            $table->boolean('is_native')->default(false);
+
             $table->timestamps();
         });
     }
