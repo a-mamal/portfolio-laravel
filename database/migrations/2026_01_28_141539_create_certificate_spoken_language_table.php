@@ -13,7 +13,18 @@ return new class extends Migration
     {
         Schema::create('certificate_spoken_language', function (Blueprint $table) {
             $table->id();
+
+            $table->foreignId('certificate_id')
+                  ->constrained()
+                  ->onDelete('cascade');
+
+            $table->foreignId('spoken_language_id')
+                  ->constrained()
+                  ->onDelete('cascade');
+
             $table->timestamps();
+
+            $table->unique(['certificate_id', 'spoken_language_id']);
         });
     }
 
