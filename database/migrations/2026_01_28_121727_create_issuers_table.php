@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('issuers', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('type'); // e.g., company, platform
+            $table->string('website')->nullable();
+            $table->string('contact_email')->nullable();
             $table->timestamps();
         });
     }
