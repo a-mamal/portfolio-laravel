@@ -1,0 +1,46 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Certificate extends Model
+{
+    /** @use HasFactory<\Database\Factories\CertificateFactory> */
+    use HasFactory;
+
+    protected $fillable = [
+        'profile_id',
+        'issuer_id',
+        'name',
+        'description',
+        'date_awarded',
+        'expiration_date',
+        'credential_link',
+        'image',
+    ];
+
+    protected $casts = [
+        'date_awarded' => 'date',
+        'expiration_date' => 'date',
+    ];
+
+    public function profile()
+    {
+        return $this->belongsTo(Profile::class);
+    }
+
+    public function issuer()
+    {
+        return $this->belongsTo(Issuer::class);
+    }
+
+    public function spokenLanguages()
+    {
+        return $this->belongsToMany(
+            SpokenLanguage::class,
+            'certificate_spoken_language'
+        );
+    }
+}
