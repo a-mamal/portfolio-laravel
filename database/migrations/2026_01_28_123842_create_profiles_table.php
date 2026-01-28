@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')           
+                ->constrained()
+                ->onDelete('cascade');
+            $table->string('display_name');        // Public name
+            $table->text('bio')->nullable();   
+            $table->string('image')->nullable(); 
             $table->timestamps();
         });
     }
